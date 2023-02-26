@@ -1,0 +1,30 @@
+    #container {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    #canvas {
+      border: 1px solid black;
+      margin-right: 10px;
+    }
+
+    .button {
+      display: block;
+      margin-bottom: 10px;
+      width: 80px;
+      height: 40px;
+      font-size: 18px;
+      text-align: center;
+      background-color: #DDD;
+      border: 1px solid #AAA;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:first-child {
+      margin-top: 0;
+    }
+
+    .button:last-child {
+      margin-bottom: 0;
+    }

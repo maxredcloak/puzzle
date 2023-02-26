@@ -1,10 +1,18 @@
 import { Cube } from './cube.js';
 import { Room } from './room.js';
 import { GrayCube } from './graycube.js';
+import { BlackCube } from './blackcube.js';
 
 // Obtener el elemento canvas y el contexto de dibujo
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+
+var blackCube = new BlackCube(100, 100, 100, 'black');
+var myCube = new Cube(200, 200, 60);
+var myGrayCube = new GrayCube(300, 300, 60);
+
+//El orden en el listado influye en su orden de renderizado
+var elements = [blackCube,myGrayCube,myCube]
 
 // Establecer el tamaño del canvas
 canvas.width = Room.width;
@@ -15,37 +23,44 @@ canvas.addEventListener('touchstart', function(e) {
   // Obtener las coordenadas de la posición tocada
   var touchX = e.touches[0].clientX - canvas.offsetLeft;
   var touchY = e.touches[0].clientY - canvas.offsetTop;
-
-  // Verificar si se hizo clic en GrayCube
-  if (touchX > GrayCube.x && touchX < GrayCube.x + GrayCube.size &&
-      touchY > GrayCube.y && touchY < GrayCube.y + GrayCube.size) {
-    GrayCube.onClick();
-  } else {
-    // Actualizar la ubicación objetivo de Cube
-    Cube.target.x = touchX;
-    Cube.target.y = touchY;
+  var finded = false;
+  elements.forEach(e =>{
+    if (touchX > e.x && touchX < e.x + e.size &&
+      touchY > e.y && touchY < e.y + e.size) {
+        finded = true;
+        e.onClick(touchX,touchY);
+    }
+  });
+  if(!finded){
+    myCube.onClick(touchX,touchY);
   }
 });
 
-var touching= false
+var touching = undefined;
 // Agregar un controlador de eventos touchmove al canvas
 canvas.addEventListener('touchmove', function(e) {
   // Obtener las coordenadas de la posición tocada
   var touchX = e.touches[0].clientX - canvas.offsetLeft;
   var touchY = e.touches[0].clientY - canvas.offsetTop;
-
-  // Verificar si se hizo clic en GrayCube
-  if (touchX > GrayCube.x && touchX < GrayCube.x + GrayCube.size &&
-      touchY > GrayCube.y && touchY < GrayCube.y + GrayCube.size) {
-    GrayCube.move(touchX, touchY);
+  if(touching){
+    myGrayCube.move(touchX,touchY);
   }
-});
+  // Verificar si se hizo clic en GrayCube
+  if (touchX > myGrayCube.x && touchX < myGrayCube.x + myGrayCube.size &&
+      touchY > myGrayCube.y && touchY < myGrayCube.y + myGrayCube.size) {
+      touching = true;
+    myGrayCube.move(touchX, touchY);
+  }
+})
+canvas.addEventListener('touchend',function(e){
+  touching = undefined;
+})
 
 // Actualizar y dibujar la habitación y los cubos
 function loop() {
-  Cube.update();
-  GrayCube.update();
-  Room.draw(ctx);
+  myCube.update();
+  myGrayCube.update();
+  Room.draw(ctx, myCube, blackCube, myGrayCube);
   requestAnimationFrame(loop);
 }
 
