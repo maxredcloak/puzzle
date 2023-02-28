@@ -1,8 +1,8 @@
-import { Cube } from './cube.js';
-import { Room } from './room.js';
-import { GrayCube } from './graycube.js';
-import { BlackCube } from './blackcube.js';
-import { build } from './level1.js';
+import { Cube } from './cubes/cube.js';
+import { Room } from './rooms/room.js';
+import { GrayCube } from './cubes/graycube.js';
+import { BlackCube } from './cubes/blackcube.js';
+import { build } from './rooms/level1.js';
 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');

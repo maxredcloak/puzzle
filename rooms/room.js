@@ -1,5 +1,5 @@
-import { Cube } from './cube.js';
-import { GrayCube } from './graycube.js';
+import { Cube } from '../cubes/cube.js';
+import { GrayCube } from '../cubes/graycube.js';
 
 export class Room{
   constructor(height, width, ctx){
@@ -16,7 +16,7 @@ export class Room{
     return this.elements;
   }
   getPlayer(){
-    return this.elements.filter(e => e instanceof Cube)[0];
+    return this.elements.filter(e => e instanceof Cube)[0]
   }
   draw(cube) {
     this.ctx.fillStyle = this.color;

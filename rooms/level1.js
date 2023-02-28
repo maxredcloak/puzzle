@@ -1,7 +1,7 @@
-import { Cube } from './cube.js';
+import { Cube } from '../cubes/cube.js';
 import { Room } from './room.js';
-import { GrayCube } from './graycube.js';
-import { BlackCube } from './blackcube.js';
+import { GrayCube } from '../cubes/graycube.js';
+import { BlackCube } from '../cubes/blackcube.js';
 
 export const build = (ctx) => {
   let room = new Room(600,600,ctx);

@@ -1,4 +1,4 @@
-import { Room } from './room.js';
+import { Room } from '../rooms/room.js';
 import { baseCube } from './baseCube.js';
 import { BlackCube } from './blackcube.js';
 import { GrayCube } from './graycube.js';
