@@ -20,8 +20,7 @@ export class Cube extends baseCube{
     this.target.x = x;
     this.target.y = y;
   }
-  onDrag(x,y){
-  }
+  
   stop(){
     this.speed.x = 0;
     this.speed.y= 0;

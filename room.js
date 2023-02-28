@@ -15,7 +15,10 @@ export class Room{
   getElements(){
     return this.elements;
   }
-  draw() {
+  getPlayer(){
+    return this.elements.filter(e => e instanceof Cube)[0];
+  }
+  draw(cube) {
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(0, 0, this.width, this.height);
     this.elements.forEach(e =>{

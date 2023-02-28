@@ -5,11 +5,6 @@ export class BlackCube extends baseCube {
     super(x, y, size, 'black');
   }
 
-  onClick(x,y) {
-    console.log('BlackCube clicked!');
-  }
-  onDrag(x,y){
-  }
   isTouching(cube) {
     const cubeRight = cube.x + cube.size;
     const cubeBottom = cube.y + cube.size;

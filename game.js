@@ -2,18 +2,12 @@ import { Cube } from './cube.js';
 import { Room } from './room.js';
 import { GrayCube } from './graycube.js';
 import { BlackCube } from './blackcube.js';
+import { build } from './level1.js';
 
-// Obtener el elemento canvas y el contexto de dibujo
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
-var room = new Room(600,600,ctx);
-var myCube = new Cube(200, 200, 60);
-
-//El orden en el listado influye en su orden de renderizado
-room.add(new BlackCube(100, 100, 100, 'black'));
-room.add(new GrayCube(300, 300, 60));
-room.add(myCube);
+var room = build(ctx);
 
 canvas.width = room.width;
 canvas.height = room.height;
@@ -29,7 +23,7 @@ canvas.addEventListener('touchstart', function(e) {
     }
   });
   if(!finded){
-    myCube.onClick(touch.x,touch.y);
+    room.getPlayer().onClick(touch.x,touch.y);
   }
 });
 

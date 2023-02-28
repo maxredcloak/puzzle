@@ -6,6 +6,10 @@ export class baseCube{
     this.color = color;
     this.isDragable = false;
   }
+  onClick(x,y) {
+  }
+  onDrag(x,y){
+  }
   update(room){
     return;
   }

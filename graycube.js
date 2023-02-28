@@ -4,10 +4,10 @@ export class GrayCube  extends baseCube{
   constructor(x, y, size) {
     super(x,y,size,'gray');
     this.isDragable = true;
-    this.isGrowing = false; // indicador de si el cubo está creciendo o no
-    this.minGrowSize = size;
-    this.maxGrowSize = size * 2; // tamaño máximo al que puede crecer el cubo
+    this.isGrowing = false;
+    this.maxGrowSize = size * 2;
     this.isShrinking = false;
+    this.minGrowSize = size;
   }
 
   update(room) {
@@ -23,10 +23,6 @@ export class GrayCube  extends baseCube{
     }
   }
 
-  move(xx, yy) {
-    this.x = xx;
-    this.y = yy;
-  }
   onDrag(x,y){
     this.x = x;
     this.y = y;
