@@ -1,23 +1,25 @@
 import { baseCube } from './baseCube.js';
 
 export class GrayCube  extends baseCube{
-  constructor(x, y, size) {
-    super(x,y,size,'gray');
+  constructor(x, y,height,sizeX,sizeY) {
+    super(x,y,sizeX,sizeY,height,'gray');
     this.isDragable = true;
     this.isGrowing = false;
-    this.maxGrowSize = size * 2;
+    this.maxGrowSize = sizeX * 2;
     this.isShrinking = false;
-    this.minGrowSize = size;
+    this.minGrowSize = sizeX;
   }
 
   update(room) {
-    if (this.isGrowing && this.size < this.maxGrowSize) {
-      this.size += 1;
+    if (this.isGrowing && this.sizeX < this.maxGrowSize) {
+      this.sizeX += 1;
+      this.sizeY += 1;
     } else if (this.isGrowing) {
       this.isGrowing = false;
     }
-    if (this.isShrinking && this.size > this.minGrowSize) {
-      this.size -= 1;
+    if (this.isShrinking && this.sizeX > this.minGrowSize) {
+      this.sizeX -= 1;
+      this.sizeY -= 1;
     } else if (this.isShrinking) {
       this.isShrinking = false;
     }
@@ -29,10 +31,10 @@ export class GrayCube  extends baseCube{
   }
 
   onClick(x,y) {
-    if (!this.isGrowing && this.size < this.maxGrowSize) {
+    if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
       this.isGrowing = true;
       this.isShrinking = false;
-    } else if(this.size > this.minGrowSize) {
+    } else if(this.sizeX > this.minGrowSize) {
       this.isShrinking = true;
       this.isGrowing = false;
     }

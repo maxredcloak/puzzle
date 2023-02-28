@@ -1,8 +1,9 @@
 import { baseCube } from './baseCube.js';
 
 export class BlackCube extends baseCube {
-  constructor(x, y, size) {
-    super(x, y, size, 'black');
+  constructor(x, y,height,sizeX,sizeY) {
+    super(x, y, sizeX,sizeY, height, 'black');
+    this.color = "#"+height +"0"+height+"0"+height+"0";
   }
 
   isTouching(cube) {

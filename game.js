@@ -12,14 +12,16 @@ var room = build(ctx);
 canvas.width = room.width;
 canvas.height = room.height;
 
-canvas.addEventListener('touchstart', function(e) {
+canvas.addEventListener('touchstart', function(e){
   var touch = getcoords(e);
   var finded = false;
   room.getElements().forEach(e =>{
-    if (touch.x > e.x && touch.x < e.x + e.size &&
-      touch.y > e.y && touch.y < e.y + e.size) {
-        finded = true;
+    if (touch.x > e.x && touch.x < e.x + e.sizeX &&
+      touch.y > e.y && touch.y < e.y + e.sizeY) {
         e.onClick(touch.x,touch.y);
+        if(!(e instanceof BlackCube)){
+          finded = true;
+        }
     }
   });
   if(!finded){
@@ -35,8 +37,8 @@ canvas.addEventListener('touchmove', function(e) {
     touching.onDrag(touch.x,touch.y);
   }else{
     room.getElements().forEach(e =>{
-      if (!touching && touch.y > e.x && touch.x < e.x + e.size &&
-        touch.y > e.y && touch.y < e.y + e.size && e.isDragable) {
+      if (!touching && touch.y > e.x && touch.x < e.x + e.sizeX &&
+        touch.y > e.y && touch.y < e.y + e.sizeY && e.isDragable) {
         touching = e;
         touching.onDrag(touch.x,touch.y);
       }
@@ -61,6 +63,5 @@ function loop() {
   room.draw();
   requestAnimationFrame(loop);
 }
-
 
 requestAnimationFrame(loop);

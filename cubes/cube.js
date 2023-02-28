@@ -4,8 +4,8 @@ import { BlackCube } from './blackcube.js';
 import { GrayCube } from './graycube.js';
 
 export class Cube extends baseCube{
-  constructor(x, y, size) {
-    super(x,y,size,'blue')
+  constructor(x, y, height, sizeX,sizeY) {
+    super(x,y,sizeX,sizeY,height,'blue')
     this.speed = {
       x: 0,
       y: 0
@@ -34,17 +34,15 @@ export class Cube extends baseCube{
   collide(elements){
     status = this.NONE;
     elements.forEach(e =>{
-      if (this.x + this.speed.x > e.x - e.size/2 - 6 && this.x + this.speed.x < e.x + e.size &&
-        this.y + this.speed.y > e.y - e.size/2 - 6 && this.y + this.speed.y < e.y + e.size
-        ||
-        this.x + this.speed.x < e.x -e.size/2-6 && this.x + this.speed.x + this.size > e.x &&
-        this.y < e.y && this.y + this.size > e.y + e.size
+      if (
+        this.x + this.speed.x > e.x - this.sizeX && this.x + this.speed.x < e.x + e.sizeX &&
+          this.y + this.speed.y > e.y - this.sizeX && this.y + this.speed.y < e.y + e.sizeX
         ) {
-          if(e instanceof BlackCube && status !== this.PLATFORM){
+          if (e.height === this.height +1 || e.height === this.height - 1){
+            this.height = e.height;
+          }else if(e.height !== this.height){
+            console.log(e.height,"zzz",this.height)
             status = this.STOP;
-          }
-          if(e instanceof GrayCube){
-            status = this.PLATFORM;
           }
       }
     });
@@ -66,20 +64,20 @@ export class Cube extends baseCube{
     if (this.y < 0) {
       this.y = 0;
     }
-    if (this.x + this.size > room.width) {
-      this.x = room.width - this.size;
+    if (this.x + this.sizeX > room.width) {
+      this.x = room.width - this.sizeX;
     }
-    if (this.y + this.size > room.height) {
-      this.y = room.height - this.size;
+    if (this.y + this.sizeY > room.height) {
+      this.y = room.height - this.sizeY;
     }
   }
 
   updateCubeSpeed() {
     if (this.target.x !== undefined && this.target.y !== undefined) {
-      var distanceX = this.target.x - (this.x + this.size / 2);
-      var distanceY = this.target.y - (this.y + this.size / 2);
+      var distanceX = this.target.x - (this.x + this.sizeX / 2);
+      var distanceY = this.target.y - (this.y + this.sizeX / 2);
       var distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-      if (Math.abs(distanceX) > this.size || Math.abs(distanceY) > this.size) {
+      if (Math.abs(distanceX) > this.sizeX || Math.abs(distanceY) > this.sizeY) {
         this.speed.x = this.maxSpeed * distanceX / distance;
         this.speed.y = this.maxSpeed * distanceY / distance;
       } else {
