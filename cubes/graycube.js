@@ -2,7 +2,7 @@ import { baseCube } from './baseCube.js';
 
 export class GrayCube  extends baseCube{
   constructor(x, y,height,sizeX,sizeY) {
-    super(x,y,sizeX,sizeY,height,'gray');
+    super(x,y,sizeX,sizeY,height,'darkred');
     this.isDragable = true;
     this.isGrowing = false;
     this.maxGrowSize = sizeX * 2;
@@ -31,6 +31,9 @@ export class GrayCube  extends baseCube{
   }
 
   onClick(x,y) {
+    
+  }
+  grow(){
     if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
       this.isGrowing = true;
       this.isShrinking = false;
@@ -38,5 +41,8 @@ export class GrayCube  extends baseCube{
       this.isShrinking = true;
       this.isGrowing = false;
     }
+  }
+  dissapear(){
+    this.isTransparent = !this.isTransparent;
   }
 }

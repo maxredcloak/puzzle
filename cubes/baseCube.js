@@ -7,15 +7,21 @@ export class baseCube{
     this.height = height;
     this.color = color;
     this.isDragable = false;
+    this.isTransparent = false;
   }
   onClick(x,y) {
   }
   onDrag(x,y){
   }
-  update(room){
-    return;
-  }
+  grow(){}
+  update(room){}
+  
   draw(ctx) {
+    if (this.isTransparent === true) {
+      ctx.globalAlpha = 0.5;
+    } else {
+      ctx.globalAlpha = 1;
+    }
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.sizeX, this.sizeY);
     ctx.textAlign = 'center';
@@ -27,4 +33,5 @@ export class baseCube{
   isTouching(cube){
     return false;
   }
+  dissapear(){}
 }
