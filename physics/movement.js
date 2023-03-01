@@ -1,3 +1,5 @@
+import { Cube } from '../cubes/cube.js';
+
 export function updateSpeed(movingObj) {
     if (movingObj.target.x !== undefined && movingObj.target.y !== undefined) {
       var distanceX = movingObj.target.x - (movingObj.x + movingObj.sizeX / 2);
@@ -14,19 +16,17 @@ export function updateSpeed(movingObj) {
       }
     }
   }
+
+const STOP = "STOP";
+const PLATFORM = "PLATFORM";
+const NONE = "NONE"; 
   
 export function collide(movingObj,elements){
-  const STOP = "STOP";
-  const PLATFORM = "PLATFORM";
-  const NONE = "NONE";
-  
   let status = NONE;
   let i = elements.length -1;
   while(elements[i] && status === NONE){
     let e = elements[i];
-    if(movingObj.x + movingObj.speed.x > e.x - movingObj.sizeX && movingObj.x + movingObj.speed.x < e.x + e.sizeX &&
-        movingObj.y + movingObj.speed.y > e.y - movingObj.sizeX && movingObj.y + movingObj.speed.y < e.y + e.sizeY && movingObj !== e && !e.isTransparent
-    ){
+    if(areTouching(movingObj,e) ){
       status = PLATFORM;
       if (e.height === movingObj.height +1 || e.height === movingObj.height - 1){
           movingObj.height = e.height;
@@ -39,4 +39,48 @@ export function collide(movingObj,elements){
   if(status === STOP){
     movingObj.stop();
   }
+}
+
+export function fallCollide(movingObj,elements){
+  let status = NONE;
+  let i = elements.length -1;
+  while(elements[i] && status === NONE){
+    let e = elements[i];
+    if(areTouching(movingObj,e) ){
+      status = PLATFORM;
+      if (e.height <= movingObj.height){
+          movingObj.height = e.height;
+      }else{
+        status = STOP;
+      }
+    }
+    i--;
+  }
+  if(status === STOP){
+    movingObj.stop();
+  }
+}
+
+export function floatingCollide(movingObj,elements){
+  let status = NONE;
+  let i = elements.length -1;
+  while(elements[i] && status === NONE){
+    let e = elements[i];
+    if(areTouching(movingObj,e) ){
+      status = PLATFORM;
+      if (e.height > movingObj.height){
+        status = STOP;
+      }else if(!(e instanceof Cube) && e.height === movingObj.height){
+        movingObj.height ++;
+      }
+    }
+    i--;
+  }
+  if(status === STOP){
+    movingObj.stop();
+  }
+}
+
+function areTouching(obj1,e){
+   return (obj1.x + obj1.speed.x > e.x - obj1.sizeX && obj1.x + obj1.speed.x < e.x + e.sizeX && obj1.y + obj1.speed.y > e.y - obj1.sizeX && obj1.y + obj1.speed.y < e.y + e.sizeY && obj1 !== e && !e.isTransparent)
 }

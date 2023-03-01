@@ -1,9 +1,9 @@
 import { baseCube } from './baseCube.js';
 import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js'
 
-export class GrayCube  extends baseCube{
+export class PurpleCube  extends baseCube{
   constructor(x, y,height,sizeX,sizeY) {
-    super(x,y,sizeX,sizeY,height,'darkred');
+    super(x,y,sizeX,sizeY,height,'purple');
     this.isDragable = true;
     this.isGrowing = false;
     this.maxGrowSize = sizeX * 2;
@@ -25,27 +25,6 @@ export class GrayCube  extends baseCube{
     } else if (this.isShrinking) {
       this.isShrinking = false;
     }
-    updateSpeed(this);
-    if(this.floating){
-      floatingCollide(this,room.getElements())
-    }else{
-      fallCollide(this,room.getElements());
-    }
-    this.x += this.speed.x;
-    this.y += this.speed.y;
-        // Mantener el cubo dentro de la habitación
-    if (this.x < 0) {
-      this.x = 0;
-    }
-    if (this.y < 0) {
-      this.y = 0;
-    }
-    if (this.x + this.sizeX > room.width) {
-      this.x = room.width - this.sizeX;
-    }
-    if (this.y + this.sizeY > room.height) {
-      this.y = room.height - this.sizeY;
-    }
   }
 
   onDrag(x,y){
@@ -54,7 +33,6 @@ export class GrayCube  extends baseCube{
   }
 
   onClick(x,y) {
-    
   }
   grow(){
     if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
@@ -74,6 +52,13 @@ export class GrayCube  extends baseCube{
       this.height++;
     }else{
       this.height--;
+    }
+  }
+  teleport(cube){
+    if(this.floating){
+      cube.x = this.x + this.sizeX;
+      cube.y = this.y + this.sizeY;
+      cube.height = this.height -1;
     }
   }
 }

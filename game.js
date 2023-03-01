@@ -2,6 +2,7 @@ import { Cube } from './cubes/cube.js';
 import { Room } from './rooms/room.js';
 import { GrayCube } from './cubes/graycube.js';
 import { BlackCube } from './cubes/blackcube.js';
+import { PurpleCube } from './cubes/purpleCube.js'
 import { build } from './rooms/level1.js';
 import { getFirstInPosition } from './search/searchFunctions.js';
 
@@ -10,6 +11,7 @@ var bup = document.getElementById('buttonUp');
 var bdo = document.getElementById('buttonDo');
 var grow = document.getElementById('grow');
 var disa = document.getElementById('dissapear');
+var levi = document.getElementById('levitate');
 var ctx = canvas.getContext('2d');
 
 var room = build(ctx);
@@ -31,24 +33,12 @@ grow.addEventListener('touchstart', function(e) {
 disa.addEventListener('touchstart', function(e) {
   editHeight = {type:'dissapear',value:undefined};
 });
-
+levi.addEventListener('touchstart', function(e) {
+  editHeight = {type:'levitate',value:undefined};
+});
+var tmpTouch = undefined;
 canvas.addEventListener('touchstart', function(e){
-  var touch = getcoords(e);
-  var finded = false;
-  let i = room.getElements().length - 1;
-  let findedObj = getFirstInPosition(room,touch.x,touch.y);
-  if(findedObj){
-    if(editHeight.type){
-      console.log(findedObj)
-      edit(editHeight,findedObj)
-    }else if (findedObj instanceof BlackCube || findedObj instanceof GrayCube) {
-      room.getPlayer().onClick(touch.x, touch.y);
-    }else{
-      findedObj.onClick(touch.x,touch.y);
-    }
-  }else{
-    room.getPlayer().onClick(touch.x,touch.y);
-  }
+  tmpTouch = e;
 });
 
 var touching = undefined;
@@ -58,18 +48,37 @@ canvas.addEventListener('touchmove', function(e) {
   if(touching){
     touching.onDrag(touch.x,touch.y);
   }else{
-    room.getElements().forEach(e =>{
-      if (!touching && touch.y > e.x && touch.x < e.x + e.sizeX &&
-        touch.y > e.y && touch.y < e.y + e.sizeY && e.isDragable) {
-        touching = e;
+    let findedObj = getFirstInPosition(room,touch.x,touch.y);
+    if(findedObj && findedObj.isDragable){
+      touching = findedObj;
         touching.onDrag(touch.x,touch.y);
-      }
-    });
+    }
   }
 })
 
-canvas.addEventListener('touchend',function(e){
-  touching = undefined;
+canvas.addEventListener('touchend',function(){
+  if(touching){
+    touching = undefined;
+  }else{
+    var touch = getcoords(tmpTouch);
+  var finded = false;
+  let i = room.getElements().length - 1;
+  let findedObj = getFirstInPosition(room,touch.x,touch.y);
+  if(findedObj){
+    if(editHeight.type){
+      edit(editHeight,findedObj)
+    }else if (findedObj instanceof BlackCube || findedObj instanceof GrayCube) {
+      room.getPlayer().onClick(touch.x, touch.y);
+    }else if(findedObj instanceof PurpleCube){
+      findedObj.teleport(room.getPlayer());
+    }
+    else{
+      findedObj.onClick(touch.x,touch.y);
+    }
+  }else{
+    room.getPlayer().onClick(touch.x,touch.y);
+  }
+  }
 })
 function edit(edit,findedObj){
   if(edit.type==='height'){
@@ -80,6 +89,9 @@ function edit(edit,findedObj){
   }
   if(edit.type === 'dissapear'){
     findedObj.dissapear();
+  }
+  if(edit.type === 'levitate'){
+    findedObj.levitate();
   }
   edit.type = undefined;
 }

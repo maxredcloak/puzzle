@@ -8,11 +8,25 @@ export class baseCube{
     this.color = color;
     this.isDragable = false;
     this.isTransparent = false;
+    this.floating = false;
+    this.speed = {
+      x: 0,
+      y: 0
+    };
+    this.target = {
+      x: undefined,
+      y: undefined
+    };
+    this.maxSpeed = 5;
   }
-  onClick(x,y) {
+  stop(){
+    this.speed.x = 0;
+    this.speed.y= 0;
+    this.target.x = undefined;
+    this.target.y = undefined;
   }
-  onDrag(x,y){
-  }
+  onClick(x,y) {}
+  onDrag(x,y){}
   grow(){}
   update(room){}
   
@@ -21,6 +35,10 @@ export class baseCube{
       ctx.globalAlpha = 0.5;
     } else {
       ctx.globalAlpha = 1;
+    }
+    ctx.fillStyle = 'cyan';
+    if(this.floating){
+      ctx.fillRect(this.x-2, this.y-2, this.sizeX+4, this.sizeY+4);
     }
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.sizeX, this.sizeY);
@@ -34,4 +52,5 @@ export class baseCube{
     return false;
   }
   dissapear(){}
+  levitate(){}
 }
