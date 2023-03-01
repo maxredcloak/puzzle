@@ -5,6 +5,8 @@ import { BlackCube } from './cubes/blackcube.js';
 import { build } from './rooms/level1.js';
 
 var canvas = document.getElementById('canvas');
+var buttoms = document.getElementById('buttonUp');
+
 var ctx = canvas.getContext('2d');
 
 var room = build(ctx);
@@ -12,15 +14,30 @@ var room = build(ctx);
 canvas.width = room.width;
 canvas.height = room.height;
 
+var editHeight = undefined;
+
+
+  buttoms.addEventListener('touchstart', function(e){
+    editHeight = 1;
+  });
+
+
 canvas.addEventListener('touchstart', function(e){
   var touch = getcoords(e);
   var finded = false;
   room.getElements().forEach(e =>{
     if (touch.x > e.x && touch.x < e.x + e.sizeX &&
       touch.y > e.y && touch.y < e.y + e.sizeY) {
-        e.onClick(touch.x,touch.y);
-        if(!(e instanceof BlackCube)){
+        if(editHeight){
+          e.height = editHeight;
+          editHeight = undefined;
           finded = true;
+          return;
+        }else{
+          e.onClick(touch.x,touch.y);
+          if(!(e instanceof BlackCube)){
+            finded = true;
+          }
         }
     }
   });

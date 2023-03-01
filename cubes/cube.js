@@ -31,21 +31,25 @@ export class Cube extends baseCube{
   STOP = "STOP";
   PLATFORM = "PLATFORM";
   NONE = "NONE";
+  
   collide(elements){
     status = this.NONE;
-    elements.forEach(e =>{
-      if (
-        this.x + this.speed.x > e.x - this.sizeX && this.x + this.speed.x < e.x + e.sizeX &&
-          this.y + this.speed.y > e.y - this.sizeX && this.y + this.speed.y < e.y + e.sizeX
-        ) {
-          if (e.height === this.height +1 || e.height === this.height - 1){
+    let finded = false;
+    let i = elements.length -1;
+    while(elements[i] && !finded){
+      let e = elements[i];
+      if(this.x + this.speed.x > e.x - this.sizeX && this.x + this.speed.x < e.x + e.sizeX &&
+          this.y + this.speed.y > e.y - this.sizeX && this.y + this.speed.y < e.y + e.sizeX && this !== e
+      ){
+        finded = true;
+        if (e.height === this.height +1 || e.height === this.height - 1){
             this.height = e.height;
-          }else if(e.height !== this.height){
-            console.log(e.height,"zzz",this.height)
-            status = this.STOP;
-          }
+        }else if(e.height !== this.height){
+          status = this.STOP;
+        }
       }
-    });
+      i--;
+    }
     if(status === this.STOP){
       this.stop();
     }
