@@ -26,7 +26,7 @@ export function collide(movingObj,elements){
   let i = elements.length -1;
   while(elements[i] && status === NONE){
     let e = elements[i];
-    if(areTouching(movingObj,e) ){
+    if(isTouching(movingObj,e) ){
       status = PLATFORM;
       if (e.height === movingObj.height +1 || e.height === movingObj.height - 1){
           movingObj.height = e.height;
@@ -46,7 +46,7 @@ export function fallCollide(movingObj,elements){
   let i = elements.length -1;
   while(elements[i] && status === NONE){
     let e = elements[i];
-    if(areTouching(movingObj,e) ){
+    if(isTouching(movingObj,e) ){
       status = PLATFORM;
       if (e.height <= movingObj.height){
           movingObj.height = e.height;
@@ -66,7 +66,7 @@ export function floatingCollide(movingObj,elements){
   let i = elements.length -1;
   while(elements[i] && status === NONE){
     let e = elements[i];
-    if(areTouching(movingObj,e) ){
+    if(isTouching(movingObj,e) ){
       status = PLATFORM;
       if (e.height > movingObj.height){
         status = STOP;
@@ -81,6 +81,6 @@ export function floatingCollide(movingObj,elements){
   }
 }
 
-function areTouching(obj1,e){
+export function isTouching(obj1,e){
    return (obj1.x + obj1.speed.x > e.x - obj1.sizeX && obj1.x + obj1.speed.x < e.x + e.sizeX && obj1.y + obj1.speed.y > e.y - obj1.sizeX && obj1.y + obj1.speed.y < e.y + e.sizeY && obj1 !== e && !e.isTransparent)
 }
