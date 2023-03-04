@@ -1,4 +1,4 @@
-import { baseCube } from './baseCube.js';
+import { baseCube } from '../cubes/baseCube.js';
 import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js'
 
 export class GreenReceptor extends baseCube{

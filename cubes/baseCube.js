@@ -48,9 +48,6 @@ export class baseCube{
     ctx.fillStyle = "white"
     ctx.fillText(this.height, this.x + this.sizeX/2, this.y + this.sizeY/2);
   }
-  isTouching(cube){
-    return false;
-  }
   dissapear(){}
   levitate(){}
 }

@@ -1,7 +1,7 @@
 import { baseCube } from './baseCube.js';
 import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js'
 import { getTouchingObj } from '../search/searchFunctions.js'
-import { GreenReceptor } from './greenReceptor.js';
+import { GreenReceptor } from '../receptor/greenReceptor.js';
 
 export class GreenCube  extends baseCube{
   constructor(x, y,height,sizeX,sizeY) {
@@ -51,7 +51,7 @@ export class GreenCube  extends baseCube{
        var touched = getTouchingObj(this,room.getElements());
     touched.forEach(t =>{
       if(t instanceof GreenReceptor){
-        t.activate();
+        t.activate()
       }
     });
   // console.log("3")
