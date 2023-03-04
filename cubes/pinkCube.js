@@ -7,13 +7,41 @@ export class PinkCube  extends baseCube{
     super(x,y,sizeX,sizeY,height,'pink');
     this.isDragable = true;
     this.isGrowing = false;
-    this.maxGrowSize = sizeX * 2;
+    this.maxGrowSize = sizeX;
     this.isShrinking = false;
     this.minGrowSize = sizeX;
     this.maxSpeed = 1;
+    this.friends = [];
+    this.takeone = false;
   }
 
   update(room) {
+    if(this.takeone){
+      this.takeone = false;
+      if(this.friends.length >0){
+        let friend = this.friends.splice(0,1)[0];
+        friend.speed.x = -this.speed.x;
+        friend.speed.y = -this.speed.y;
+        friend.x = this.x + friend.speed.x * this.sizeX * 1.5;
+        friend.y = this.y + friend.speed.y * this.sizeY * 1.5;
+        room.getElements().push(friend);
+        this.isShrinking = true;
+        this.maxGrowSize -= 10;
+        this.minGrowSize = this.maxGrowSize;
+      }
+    }
+    if (this.isGrowing && this.sizeX < this.maxGrowSize) {
+      this.sizeX += 1;
+      this.sizeY += 1;
+    } else if (this.isGrowing) {
+      this.isGrowing = false;
+    }
+    if (this.isShrinking && this.sizeX > this.minGrowSize) {
+      this.sizeX -= 1;
+      this.sizeY -= 1;
+    } else if (this.isShrinking) {
+      this.isShrinking = false;
+    }
     if(!this.target.x &&!this.target.y){
       this.target.x = Math.random() * room.width;
       this.target.y = Math.random() * room.height;
@@ -21,8 +49,11 @@ export class PinkCube  extends baseCube{
     updateSpeed(this);
     let objs = getTouchingObj(this,room.getElements());
     objs.forEach(o => {
-      if(o instanceof PinkCube){
-        console.log("p")
+      if(o instanceof PinkCube && !o.friends.includes(this)){
+        this.friends.push(o);
+        room.deleteElement(o);
+        this.maxGrowSize += 10;
+        this.grow()
       }
     })
     collide(this, room.getElements());
@@ -45,6 +76,10 @@ export class PinkCube  extends baseCube{
       this.y = room.height - this.sizeY;
     }
   }
+  onClick(x,y){
+    this.target.x = x;
+    this.target.y = y;
+  }
   grow(){
     if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
       this.isGrowing = true;
@@ -60,6 +95,7 @@ export class PinkCube  extends baseCube{
   }
 
   onClick(x,y) {
+    this.takeone = true;
   }
   levitate(){
     this.floating = !this.floating;

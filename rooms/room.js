@@ -15,6 +15,9 @@ export class Room{
   getElements(){
     return this.elements;
   }
+  deleteElement(o){
+    this.elements = this.elements.filter(e => e !== o);
+  }
   getPlayer(){
     return this.elements.filter(e => e instanceof Cube)[0]
   }
