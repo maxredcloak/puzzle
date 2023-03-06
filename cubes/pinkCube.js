@@ -76,10 +76,6 @@ export class PinkCube  extends baseCube{
       this.y = room.height - this.sizeY;
     }
   }
-  onClick(x,y){
-    this.target.x = x;
-    this.target.y = y;
-  }
   grow(){
     if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
       this.isGrowing = true;
@@ -95,6 +91,9 @@ export class PinkCube  extends baseCube{
   }
 
   onClick(x,y) {
+    if(this.friends.length === 0){
+      return this;
+    }
     this.takeone = true;
   }
   levitate(){
