@@ -1,10 +1,8 @@
-export class baseCube{
+import PhysicalObject from '../interfaces/physicalObject.js';
+
+export default class baseCube extends PhysicalObject{
   constructor(x, y, sizeX,sizeY, height, color) {
-    this.x = x;
-    this.y = y;
-    this.sizeX = sizeX;
-    this.sizeY = sizeY;
-    this.height = height;
+    super(x,y,sizeX,sizeY,height);
     this.color = color;
     this.isDragable = false;
     this.isTransparent = false;
@@ -29,7 +27,6 @@ export class baseCube{
   onDrag(x,y){}
   grow(){}
   update(room){}
-  
   draw(ctx) {
     if (this.isTransparent === true) {
       ctx.globalAlpha = 0.5;

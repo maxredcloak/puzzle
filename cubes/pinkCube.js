@@ -1,10 +1,12 @@
-import { baseCube } from './baseCube.js';
+import baseCube from './base/baseCube.js';
 import { updateSpeed,fallCollide,floatingCollide, collide } from '../physics/movement.js'
 import { getTouchingObj } from '../search/searchFunctions.js'
+import basicGrow from './functions/basicGrow.js'
 
-export class PinkCube  extends baseCube{
+export class PinkCube  extends (baseCube){
   constructor(x, y,height,sizeX,sizeY) {
     super(x,y,sizeX,sizeY,height,'pink');
+    
     this.isDragable = true;
     this.isGrowing = false;
     this.maxGrowSize = sizeX;
@@ -13,6 +15,7 @@ export class PinkCube  extends baseCube{
     this.maxSpeed = 1;
     this.friends = [];
     this.takeone = false;
+    this.grow = basicGrow;
   }
 
   update(room) {
@@ -74,15 +77,6 @@ export class PinkCube  extends baseCube{
     }
     if (this.y + this.sizeY > room.height) {
       this.y = room.height - this.sizeY;
-    }
-  }
-  grow(){
-    if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
-      this.isGrowing = true;
-      this.isShrinking = false;
-    } else if(this.sizeX > this.minGrowSize) {
-      this.isShrinking = true;
-      this.isGrowing = false;
     }
   }
   onDrag(x,y){

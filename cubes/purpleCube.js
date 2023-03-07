@@ -1,4 +1,4 @@
-import { baseCube } from './baseCube.js';
+import baseCube from './base/baseCube.js';
 import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js'
 
 export class PurpleCube  extends baseCube{
@@ -32,17 +32,6 @@ export class PurpleCube  extends baseCube{
     this.target.y = y;
   }
 
-  onClick(x,y) {
-  }
-  grow(){
-    if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
-      this.isGrowing = true;
-      this.isShrinking = false;
-    } else if(this.sizeX > this.minGrowSize) {
-      this.isShrinking = true;
-      this.isGrowing = false;
-    }
-  }
   dissapear(){
     this.isTransparent = !this.isTransparent;
   }

@@ -1,8 +1,6 @@
 import { Room } from '../rooms/room.js';
-import { baseCube } from './baseCube.js';
-import { BlackCube } from './blackcube.js';
-import { GrayCube } from './graycube.js';
-import { updateSpeed,collide } from '../physics/movement.js'
+import baseCube from './base/baseCube.js';
+import { executeMovement } from '../physics/movement.js'
 
 export class Cube extends baseCube{
   constructor(x, y, height, sizeX,sizeY) {
@@ -28,23 +26,7 @@ export class Cube extends baseCube{
       this.grabbed = false;
       this.color = 'darkblue';
     }
-    updateSpeed(this);
-    collide(this,room.getElements());
-    this.x += this.speed.x;
-    this.y += this.speed.y;
-
-    if (this.x < 0) {
-      this.x = 0;
-    }
-    if (this.y < 0) {
-      this.y = 0;
-    }
-    if (this.x + this.sizeX > room.width) {
-      this.x = room.width - this.sizeX;
-    }
-    if (this.y + this.sizeY > room.height) {
-      this.y = room.height - this.sizeY;
-    }
+    executeMovement(this,room);
   }
   draw(ctx) {
     if (this.isTransparent === true) {

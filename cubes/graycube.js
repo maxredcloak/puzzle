@@ -1,5 +1,7 @@
-import { baseCube } from './baseCube.js';
+import baseCube from './base/baseCube.js';
 import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js'
+import basicGrow from './functions/basicGrow.js'
+import basicLevitate from './functions/basicLevitate.js'
 
 export class GrayCube  extends baseCube{
   constructor(x, y,height,sizeX,sizeY) {
@@ -9,7 +11,9 @@ export class GrayCube  extends baseCube{
     this.maxGrowSize = sizeX * 2;
     this.isShrinking = false;
     this.minGrowSize = sizeX;
-    this.maxSpeed = 15
+    this.maxSpeed = 15;
+    this.grow = basicGrow;
+    this.levitate = basicLevitate;
   }
 
   update(room) {
@@ -52,28 +56,9 @@ export class GrayCube  extends baseCube{
     this.target.x = x;
     this.target.y = y;
   }
-
-  onClick(x,y) {
-    
-  }
-  grow(){
-    if (!this.isGrowing && this.sizeX < this.maxGrowSize) {
-      this.isGrowing = true;
-      this.isShrinking = false;
-    } else if(this.sizeX > this.minGrowSize) {
-      this.isShrinking = true;
-      this.isGrowing = false;
-    }
-  }
+  
   dissapear(){
     this.isTransparent = !this.isTransparent;
   }
-  levitate(){
-    this.floating = !this.floating;
-    if(this.floating){
-      this.height++;
-    }else{
-      this.height--;
-    }
-  }
+  
 }

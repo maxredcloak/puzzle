@@ -38,7 +38,4 @@ export class GrabCommand extends BaseCommand{
   constructor(){
     super();
   }
-  execute(baseCube){
-  
-  }
 }

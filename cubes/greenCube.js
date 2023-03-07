@@ -1,4 +1,4 @@
-import { baseCube } from './baseCube.js';
+import baseCube from './base/baseCube.js';
 import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js'
 import { getTouchingObj } from '../search/searchFunctions.js'
 import { GreenReceptor } from '../receptor/greenReceptor.js';

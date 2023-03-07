@@ -84,3 +84,23 @@ export function floatingCollide(movingObj,elements){
 export function isTouching(obj1,e){
    return (obj1.x + obj1.speed.x > e.x - obj1.sizeX && obj1.x + obj1.speed.x < e.x + e.sizeX && obj1.y + obj1.speed.y > e.y - obj1.sizeX && obj1.y + obj1.speed.y < e.y + e.sizeY && obj1 !== e && !e.isTransparent)
 }
+
+export function executeMovement(movingObj,room) {
+    updateSpeed(movingObj);
+    collide(movingObj,room.getElements());
+    movingObj.x += movingObj.speed.x;
+    movingObj.y += movingObj.speed.y;
+
+    if (movingObj.x < 0) {
+      movingObj.x = 0;
+    }
+    if (movingObj.y < 0) {
+      movingObj.y = 0;
+    }
+    if (movingObj.x + movingObj.sizeX > room.width) {
+      movingObj.x = room.width - movingObj.sizeX;
+    }
+    if (movingObj.y + movingObj.sizeY > room.height) {
+      movingObj.y = room.height - movingObj.sizeY;
+    }
+  }
