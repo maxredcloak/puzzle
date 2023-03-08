@@ -37,7 +37,7 @@ activate(){
     }
     ctx.fillStyle = this.color;
   //  ctx.fillRect(this.x, this.y, this.sizeX, this.sizeY);
-  ctx.beginPath()
+  ctx.beginPath();
   ctx.arc(this.x, this.y, this.sizeX, 0, 2 * Math.PI);
   ctx.fill()
     ctx.textAlign = 'center';

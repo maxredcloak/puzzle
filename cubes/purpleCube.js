@@ -1,5 +1,6 @@
 import baseCube from './base/baseCube.js';
-import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js'
+import { updateSpeed,fallCollide,floatingCollide } from '../physics/movement.js';
+import basicLevitate from './functions/basicLevitate.js'
 
 export class PurpleCube  extends baseCube{
   constructor(x, y,height,sizeX,sizeY) {
@@ -10,21 +11,7 @@ export class PurpleCube  extends baseCube{
     this.isShrinking = false;
     this.minGrowSize = sizeX;
     this.maxSpeed = 15
-  }
-
-  update(room) {
-    if (this.isGrowing && this.sizeX < this.maxGrowSize) {
-      this.sizeX += 1;
-      this.sizeY += 1;
-    } else if (this.isGrowing) {
-      this.isGrowing = false;
-    }
-    if (this.isShrinking && this.sizeX > this.minGrowSize) {
-      this.sizeX -= 1;
-      this.sizeY -= 1;
-    } else if (this.isShrinking) {
-      this.isShrinking = false;
-    }
+    this.levitate = basicLevitate;
   }
 
   onDrag(x,y){
@@ -34,14 +21,6 @@ export class PurpleCube  extends baseCube{
 
   dissapear(){
     this.isTransparent = !this.isTransparent;
-  }
-  levitate(){
-    this.floating = !this.floating;
-    if(this.floating){
-      this.height++;
-    }else{
-      this.height--;
-    }
   }
   teleport(cube){
     if(this.floating){

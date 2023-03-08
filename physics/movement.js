@@ -86,8 +86,6 @@ export function isTouching(obj1,e){
 }
 
 export function executeMovement(movingObj,room) {
-    updateSpeed(movingObj);
-    collide(movingObj,room.getElements());
     movingObj.x += movingObj.speed.x;
     movingObj.y += movingObj.speed.y;
 
