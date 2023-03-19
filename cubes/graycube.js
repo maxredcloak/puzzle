@@ -5,7 +5,7 @@ import basicLevitate from './functions/basicLevitate.js'
 import {growingUpdate} from './functions/complexUpdate.js'
 
 export class GrayCube  extends baseCube{
-  constructor(x, y,height,sizeX,sizeY) {
+  constructor(x, y,height,sizeX,sizeY,objectHeight=1) {
     super(x,y,sizeX,sizeY,height,'darkred');
     this.isDragable = true;
     this.isGrowing = false;

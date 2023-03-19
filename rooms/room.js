@@ -21,6 +21,13 @@ export class Room{
   getPlayer(){
     return this.elements.filter(e => e instanceof Cube)[0]
   }
+  launchSpell(spell){
+    var pp = this.getPlayer();
+    var position = pp.facingPosition;
+    position.x += pp.x;
+    position.y += pp.y;
+//    if()
+  }
   draw() {
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(0, 0, this.width, this.height);

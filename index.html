@@ -8,15 +8,22 @@
 <body>
   <div id="container">
     <canvas id="canvas" width="400" height="400"></canvas>
-    <div id="buttons">
-      <button id="buttonUp" class="button">^</button>
+  </div>
+  <div id="container">
+    <canvas id="controller" width="1100" height="500"></canvas>
+  </div>
+  <div id="interactions">
+    <button id="buttonUp" class="button">^</button>
       <button id="buttonDo" class="button">v</button>
       <button id="grow" class="button">grow</button>
       <button id="dissapear" class="button">dissapear</button>
       <button id="levitate" class="button">levitate</button>
       <button id="grab" class="button">grab</button>
-    </div>
   </div>
+  <div id="x"></div>
+  <div id="y"></div>
+  <div id="action"></div>
   <script src="game.js" type="module"></script>
+  <script src="controller.js" type="module"></script>
 </body>
 </html>
